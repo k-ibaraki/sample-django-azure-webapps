@@ -1,0 +1,24 @@
+name: Push Container to Azure ContainerRegistry
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }} # {mycontainer}.azurecr.io
+      IMAGE_NAME: sample-django-webapps
+      TAG: ${GITHUB_REF#refs/heads/}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ${REGISTRY_NAME}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build . -t ${REGISTRY_NAME}/${IMAGE_NAME}:${TAG}
+        docker push ${REGISTRY_NAME}/${IMAGE_NAME}:${TAG} 
