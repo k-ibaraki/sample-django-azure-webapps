@@ -11,7 +11,6 @@ jobs:
     env:
       REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }} # {mycontainer}.azurecr.io
       IMAGE_NAME: sample-django-webapps
-      TAG: ${GITHUB_REF#refs/heads/}
     steps:
     - uses: actions/checkout@v2
     - uses: azure/docker-login@v1
@@ -20,5 +19,5 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . -t ${REGISTRY_NAME}/${IMAGE_NAME}:${TAG}
-        docker push ${REGISTRY_NAME}/${IMAGE_NAME}:${TAG} 
+        docker build . -t ${REGISTRY_NAME}/${IMAGE_NAME}:${GITHUB_REF#refs/heads/}
+        docker push ${REGISTRY_NAME}/${IMAGE_NAME}:${GITHUB_REF#refs/heads/}
