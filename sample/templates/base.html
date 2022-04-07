@@ -1,0 +1,15 @@
+<html>
+
+<head>
+  {% if title %}
+  <title>{{ title }} - Django Example </title>
+  {% else %}
+  <title>Django Example</title>
+  {% endif %}
+</head>
+
+<body>
+  {% block content %}{% endblock %}
+</body>
+
+</html>
