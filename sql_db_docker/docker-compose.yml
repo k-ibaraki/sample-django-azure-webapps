@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  db:
+    platform: linux/x86_64
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: P@ssw0rd
+      MSSQL_PID: Developer
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./volumes/db/data:/var/opt/mssql
+    ports:
+      - 1433:1433
