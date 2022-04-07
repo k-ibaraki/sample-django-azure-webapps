@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from aldjemy.table import foreign_key
 from dotenv import load_dotenv
+from sqlalchemy import false, true
 load_dotenv(verbose=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv('HOST_NAME', 'localhost')]
+ALLOWED_HOSTS = os.getenv('HOST_NAME', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'aldjemy',
     'sample',  # add
 ]
 
@@ -72,15 +75,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sampleProject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+ALDJEMY_ENGINES = {
+    "mssql": 'mssql+pyodbc'
+}
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": os.getenv('MS_DB_NAME', ''),
+        "USER": os.getenv('MS_DB_USER', ''),
+        "PASSWORD": os.getenv('MS_DB_PASSWORD', ''),
+        "HOST": os.getenv('MS_DB_HOST', 'localhost'),
+        "PORT": os.getenv('MS_DB_PORT', '1433'),
+        "OPTIONS": {
+            "driver": os.getenv('MS_DB_DRIVER', 'ODBC Driver 18 for SQL Server'),
+        },
+    },
 }
 
 
