@@ -1,10 +1,12 @@
 from urllib.request import Request
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_protect
 from .forms import UserForm
 from .infra.users import get_users
 
 
+@csrf_protect
 def index(request: Request) -> HttpResponse:
 
     user_form: UserForm
