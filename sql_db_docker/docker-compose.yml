@@ -8,6 +8,7 @@ services:
       ACCEPT_EULA: Y
       MSSQL_SA_PASSWORD: P@ssw0rd
       MSSQL_PID: Developer
+      MSSQL_AGENT_ENABLED: "true"
       TZ: "Asia/Tokyo"
     volumes:
       - ./volumes/db/data:/var/opt/mssql

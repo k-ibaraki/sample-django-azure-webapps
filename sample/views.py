@@ -1,25 +1,32 @@
+from urllib.request import Request
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import UserForm
 from .infra.users import get_users
 
 
-def index(request):
-    return HttpResponse('Hello Sample')
+def index(request: Request) -> HttpResponse:
 
+    user_form: UserForm
+    valuse: dict = {}
 
-def login(request):
-
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        user_form.save(commit=True)
-        print('hogehoge')
+    if request.method == 'POST':  # POSTされたときの処理
+        try:
+            user_form = UserForm(request.POST)
+            if user_form.is_valid():
+                user_form.save(commit=True)  # DBにデータを保存
+        except Exception as e:  # エラー処理
+            print(e)
+            user_form = UserForm()
     else:
         user_form = UserForm()
 
-    return render(request, 'login.html', {'form': user_form})
+    try:
+        valuse = {
+            'form': user_form,
+            'users': get_users(),  # userを取得(sqlAlchemyを使用)
+        }
+    except Exception as e:  # エラー処理
+        print(e)
 
-
-def users(request):
-    values = {'users': get_users()}
-    return render(request, 'users.html', values)
+    return render(request, 'index.html', valuse)

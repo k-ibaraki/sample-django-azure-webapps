@@ -9,13 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import ssl
 from pathlib import Path
 import os
-from aldjemy.table import foreign_key
 from dotenv import load_dotenv
-from sqlalchemy import false, true
 load_dotenv(verbose=True)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,6 +93,7 @@ DATABASES = {
         "PORT": os.getenv('MS_DB_PORT', '1433'),
         "OPTIONS": {
             "driver": os.getenv('MS_DB_DRIVER', 'ODBC Driver 18 for SQL Server'),
+            "extra_params": os.getenv('MS_DB_EXTRA_PARAMS', ''),
         },
     },
 }

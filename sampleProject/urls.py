@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.shortcuts import redirect
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('', lambda r: redirect('/sample/')),  # add
-    path('sample/', include('sample.urls')),
+    path('admin/', admin.site.urls),
+    path('', lambda r: redirect('/sample/')),  # sampleにリダイレクト
+    path('sample/', include('sample.urls')),  # sampleに移動
 ]
