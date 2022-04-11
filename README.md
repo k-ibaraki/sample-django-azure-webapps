@@ -45,7 +45,7 @@ poetry update
 SECRET_KEY=
 
 # Djangoアプリが起動できるHOST名
-HOST_NAME=localhost,127.0.0.1
+ALLOWED_HOSTS=localhost,127.0.0.1
 
 # SQL ServerのHOST
 MS_DB_HOST=localhost
