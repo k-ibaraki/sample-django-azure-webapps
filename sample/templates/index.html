@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add User</h1>
+<form action="" method="post" novalidate>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit">
+</form>
+
+<h1>User List</h1>
+<ul>
+  {% for user in users %}
+  <li> Username: {{ user.username }}, Email: {{ user.email }}, ID: {{ user.id }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

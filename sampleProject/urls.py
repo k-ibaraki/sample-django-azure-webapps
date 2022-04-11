@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('', include('sample.urls')),  # add
-    path('sample/', include('sample.urls')),
+    path('admin/', admin.site.urls),
+    path('', lambda r: redirect('/sample/')),  # sampleにリダイレクト
+    path('sample/', include('sample.urls')),  # sampleに移動
 ]
