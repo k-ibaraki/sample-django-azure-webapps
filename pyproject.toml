@@ -12,6 +12,7 @@ gunicorn = "^20.1.0"
 python-dotenv = "^0.19.2"
 aldjemy = "^2.6"
 mssql-django = "^1.1.2"
+SQLAlchemy = "^1.4.35"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
