@@ -78,23 +78,28 @@ WSGI_APPLICATION = 'sampleProject.wsgi.application'
 ALDJEMY_ENGINES = {
     "mssql": 'mssql+pyodbc'
 }
+
+sqlite = {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': BASE_DIR / 'db.sqlite3',
+}
+
+mssql = {
+    "ENGINE": "mssql",
+    "NAME": os.getenv('MS_DB_NAME', ''),
+    "USER": os.getenv('MS_DB_USER', ''),
+    "PASSWORD": os.getenv('MS_DB_PASSWORD', ''),
+    "HOST": os.getenv('MS_DB_HOST', 'localhost'),
+    "PORT": os.getenv('MS_DB_PORT', '1433'),
+    "OPTIONS": {
+        "driver": os.getenv('MS_DB_DRIVER', 'ODBC Driver 18 for SQL Server'),
+        "extra_params": os.getenv('MS_DB_EXTRA_PARAMS', ''),
+    }
+}
+
+
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": os.getenv('MS_DB_NAME', ''),
-        "USER": os.getenv('MS_DB_USER', ''),
-        "PASSWORD": os.getenv('MS_DB_PASSWORD', ''),
-        "HOST": os.getenv('MS_DB_HOST', 'localhost'),
-        "PORT": os.getenv('MS_DB_PORT', '1433'),
-        "OPTIONS": {
-            "driver": os.getenv('MS_DB_DRIVER', 'ODBC Driver 18 for SQL Server'),
-            "extra_params": os.getenv('MS_DB_EXTRA_PARAMS', ''),
-        },
-    },
+    "default": sqlite if os.getenv('DB_ENGINE') == 'sqlite' else mssql
 }
 
 
