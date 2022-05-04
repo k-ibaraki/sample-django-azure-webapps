@@ -1,0 +1,16 @@
+services:
+  django-sample-web:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+
+#     # sql serverとアプリの両方をdockerで起動する場合は、ネットワークの設定が必要です。
+#     # 下記の設定により、ネットワークの設定を追加出来ます。
+#     # (その場合、dbのhost名はdockerのContainer名である`db`になります)
+#     networks:
+#       - sql_db_docker_default
+
+# networks:
+#   sql_db_docker_default:
+#     external: true

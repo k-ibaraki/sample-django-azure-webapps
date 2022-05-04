@@ -95,7 +95,7 @@ poetry run gunicorn sampleProject.asgi:application -w 2 -k uvicorn.workers.Uvico
 
 ## サンプルアプリのDocker imageの作成・ローカルでの起動
 - ルートディレクトリにある`DockerFile`にdockerイメージを作成する設定が入っていますので、`docker build` コマンドでdockerイメージを作成することができます。
-- 今回は、更にローカルで楽に起動できるように`docker-compose.yml`も作りましたので、ルートディレクトリで下記コマンドで起動アプリを起動できます。
+- 今回は、更にローカルで楽に起動できるように`compose.yml`も作りましたので、ルートディレクトリで下記コマンドで起動アプリを起動できます。
   - (注意)環境変数は`.env`ファイルから取得するようにしていますので、先に`.env`の設定をお願いします。
 - ビルド
 ```sh
@@ -109,7 +109,7 @@ docker compose up
 # SQL Serverもdockerで動かす方法について
 
 ## SQL Serveの起動
-- `sql_db_docker`配下に、SQL Server用の`docker-compose.yml`を作成しています。
+- `sql_db_docker`配下に、SQL Server用の`compose.yml`を作成しています。
 - `sql_db_docker`配下に移動して、起動してください
 ```sh
 cd sql_db_docker
@@ -117,11 +117,11 @@ docker compose up
 ```
 
 ## Databaseとユーザーの作成
-- 上記の`docker-compose.yml`は`SQL Server`の立ち上げまでしかしてないので、Databaseとユーザーの作成は`localhost:1433`に接続してsqlコマンドを実行してください。
+- 上記の`compose.yml`は`SQL Server`の立ち上げまでしかしてないので、Databaseとユーザーの作成は`localhost:1433`に接続してsqlコマンドを実行してください。
 
-## アプリケーション側のdocker-compose.ymlにネットワークの設定を追加
+## アプリケーション側のcompose.ymlにネットワークの設定を追加
 - dbとアプリの両方を`docker`で動かす場合、ネットワークの設定が必要です。
-- アプリ用の`docker-compose.yml`(ルート直下)でコメントアウトしてある箇所を有効化することで、ネットワークの設定が出来ます。
+- アプリ用の`compose.yml`(ルート直下)でコメントアウトしてある箇所を有効化することで、ネットワークの設定が出来ます。
 - このとき、アプリから指定するsql serverのホスト名は、docker上でのサービス名になります。具体的には`db`です。
 
 
