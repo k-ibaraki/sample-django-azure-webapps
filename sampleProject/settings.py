@@ -50,10 +50,23 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # aws x-ray setting
-    'aws_xray_sdk.ext.django.middleware.XRayMiddleware',
 ]
+# aws x-ray setting
+if os.getenv('USE_AWS_XRAY', 'False') == 'True':
+    MIDDLEWARE.extend([
+        'aws_xray_sdk.ext.django.middleware.XRayMiddleware',
+    ])
+    INSTALLED_APPS.extend([
+        'aws_xray_sdk.ext.django',
+    ])
+    XRAY_RECORDER = {
+        'AUTO_INSTRUMENT': True,
+        'AWS_XRAY_CONTEXT_MISSING': 'LOG_ERROR',
+        'AWS_XRAY_DAEMON_ADDRESS': '127.0.0.1:2000',
+        'AWS_XRAY_TRACING_NAME': 'SampleDjangoWebapps',
+        'SAMPLING': False,
+    }
+
 
 ROOT_URLCONF = 'sampleProject.urls'
 

@@ -9,7 +9,7 @@ COPY . .
 # AWS X-Ray deamon
 RUN mkdir xray
 RUN curl https://s3.dualstack.ap-northeast-1.amazonaws.com/aws-xray-assets.ap-northeast-1/xray-daemon/aws-xray-daemon-3.x.deb -o ./xray/aws-xray-daemon-3.x.deb
-RUN dpkg -i ./xray/aws-xray-daemon-3.x.deb
+RUN apt-get install ./xray/aws-xray-daemon-3.x.deb
 
 # SQL DB Driver
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
