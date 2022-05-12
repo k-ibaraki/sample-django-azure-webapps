@@ -1,0 +1,28 @@
+version: 1.0
+runtime: python3
+build:
+  env:
+    - name: PYTHONUNBUFFERED
+    - value: 1
+  commands:
+    pre-build:
+      # AWS X-Ray deamon
+      - mkdir xray
+      - curl https://s3.dualstack.ap-northeast-1.amazonaws.com/aws-xray-assets.ap-northeast-1/xray-daemon/aws-xray-daemon-3.x.deb -o ./xray/aws-xray-daemon-3.x.deb
+      - apt-get install ./xray/aws-xray-daemon-3.x.deb
+      # SQL DB Driver
+      - curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+      - curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+      - apt-get update
+      - ACCEPT_EULA=Y apt-get install -y msodbcsql18
+      - apt-get install -y unixodbc-dev
+    build:
+      - pip install poetry
+      - poetry config virtualenvs.create false
+      - poetry update
+      - chmod 744 ./startup.sh
+run:
+  runtime-version: 3.8
+  command: ./startup.sh
+  network:
+    port: 8000
