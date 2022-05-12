@@ -3,7 +3,7 @@ runtime: python3
 build:
   env:
     - name: PYTHONUNBUFFERED
-    - value: 1
+      value: 1
   commands:
     pre-build:
       # AWS X-Ray deamon
@@ -21,6 +21,7 @@ build:
       - poetry config virtualenvs.create false
       - poetry update
       - chmod 744 ./startup.sh
+
 run:
   runtime-version: 3.8
   command: ./startup.sh
