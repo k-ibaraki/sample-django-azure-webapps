@@ -7,14 +7,15 @@ build:
   commands:
     pre-build:
       # AWS X-Ray deamon
-      - curl https://s3.dualstack.ap-northeast-1.amazonaws.com/aws-xray-assets.ap-northeast-1/xray-daemon/aws-xray-daemon-3.x.deb -o ./aws-xray-daemon-3.x.deb
-      - apt-get install ./aws-xray-daemon-3.x.deb
+      - curl https://s3.dualstack.ap-northeast-1.amazonaws.com/aws-xray-assets.ap-northeast-1/xray-daemon/aws-xray-daemon-3.x.rpm -o ./aws-xray-daemon-3.x.rpm
+      - yum install ./aws-xray-daemon-3.x.rpm
       # SQL DB Driver
-      - curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-      - curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
-      - apt-get update
-      - ACCEPT_EULA=Y apt-get install -y msodbcsql18
-      - apt-get install -y unixodbc-dev
+      - curl https://packages.microsoft.com/config/rhel/8/prod.repo > /etc/yum.repos.d/mssql-release.repo
+      - yum remove unixODBC-utf16 unixODBC-utf16-devel
+      - ACCEPT_EULA=Y yum install -y msodbcsql18
+      - echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+      - source ~/.bashrc
+      - sudo yum install -y unixODBC-devel
     build:
       - pip install poetry
       - poetry config virtualenvs.create false
