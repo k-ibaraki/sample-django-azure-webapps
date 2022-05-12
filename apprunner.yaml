@@ -15,7 +15,7 @@ build:
       - ACCEPT_EULA=Y yum install -y msodbcsql18
       - echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
       - source ~/.bashrc
-      - sudo yum install -y unixODBC-devel
+      - yum install -y unixODBC-devel
       # install gcc
       - yum install gcc
       - yum install python3-devel
@@ -26,7 +26,7 @@ build:
       - chmod 744 ./startup.sh
 
 run:
-  runtime-version: 3.8
+  runtime-version: 3.9
   command: ./startup.sh
   network:
     port: 8000
