@@ -1,0 +1,8 @@
+services:
+  django-sample-web:
+    networks:
+      - sql_db_docker_default
+
+networks:
+  sql_db_docker_default:
+    external: true

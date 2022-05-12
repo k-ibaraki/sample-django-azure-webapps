@@ -120,8 +120,11 @@ docker compose up
 - 上記の`compose.yml`は`SQL Server`の立ち上げまでしかしてないので、Databaseとユーザーの作成は`localhost:1433`に接続してsqlコマンドを実行してください。
 
 ## アプリケーション側のcompose.ymlにネットワークの設定を追加
-- dbとアプリの両方を`docker`で動かす場合、ネットワークの設定が必要です。
-- アプリ用の`compose.yml`(ルート直下)でコメントアウトしてある箇所を有効化することで、ネットワークの設定が出来ます。
+- DBとアプリの両方を`docker`で動かす場合、ネットワークの設定が必要です。
+- `compose.with_local_db.yaml`に記載しています。`.env`で下記設定をすることで、ネットワーク設定込でアプリケーションを起動できます。
+```.env:.env
+COMPOSE_FILE=compose.yaml:compose.with_local_db.yaml
+```
 - このとき、アプリから指定するsql serverのホスト名は、docker上でのサービス名になります。具体的には`db`です。
 
 
