@@ -23,7 +23,10 @@ def get_users() -> List[dict]:
     # いわゆる内包表記で書いています。Python特有の書き方なのでなれないと分かりにくいかもです。
     users: List[dict] = [{k: v for k, v in u.__dict__.items() if k != "_sa_instance_state"}
                          for u in session.query(User_sa).all()]
-
     # session.query(User_sa).all()は下記でも動きます。（この場合sessionの定義は不要にできます）
     # User_sa.query().all()
+
+    # closeしておく
+    session.close()
+
     return users
