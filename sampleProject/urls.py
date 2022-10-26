@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 
-urlpatterns = [
+urlpatterns: list = [
     path('admin/', admin.site.urls),
     path('', lambda r: redirect('/sample/')),  # sampleにリダイレクト
     path('sample/', include('sample.urls')),  # sampleに移動

@@ -16,23 +16,24 @@ load_dotenv(verbose=True)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY: str | None = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG: bool = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS: list[str] = os.getenv(
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS: list[str] = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'sample',  # add
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE: list[str] = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,9 +54,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'sampleProject.urls'
+ROOT_URLCONF: str = 'sampleProject.urls'
 
-TEMPLATES = [
+TEMPLATES: list[dict] = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -71,20 +72,20 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sampleProject.wsgi.application'
+WSGI_APPLICATION: str = 'sampleProject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-ALDJEMY_ENGINES = {
+ALDJEMY_ENGINES: dict = {
     "mssql": 'mssql+pyodbc'
 }
 
-sqlite = {
+sqlite: dict = {
     'ENGINE': 'django.db.backends.sqlite3',
     'NAME': BASE_DIR / 'db.sqlite3',
 }
 
-mssql = {
+mssql: dict = {
     "ENGINE": "mssql",
     "NAME": os.getenv('MS_DB_NAME', ''),
     "USER": os.getenv('MS_DB_USER', ''),
@@ -98,7 +99,7 @@ mssql = {
 }
 
 
-DATABASES = {
+DATABASES: dict = {
     "default": sqlite if os.getenv('DB_ENGINE') == 'sqlite' else mssql
 }
 
@@ -106,7 +107,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS: list[dict] = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -125,21 +126,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE: str = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE: str = 'UTC'
 
-USE_I18N = True
+USE_I18N: bool = True
 
-USE_TZ = True
+USE_TZ: bool = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL: str = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD: str = 'django.db.models.BigAutoField'
