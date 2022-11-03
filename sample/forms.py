@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from .models import User
 
 # Form用のモデル
@@ -6,6 +7,6 @@ from .models import User
 
 class UserForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('username', 'email', 'password')
-        widgets = {'password': forms.PasswordInput()}
+        model: models.Model = User
+        fields: tuple = ('username', 'email', 'password')
+        widgets: dict = {'password': forms.PasswordInput()}

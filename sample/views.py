@@ -1,5 +1,4 @@
-from urllib.request import Request
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .forms import UserForm
@@ -7,10 +6,10 @@ from .infra.users import get_users
 
 
 @csrf_exempt
-def index(request: Request) -> HttpResponse:
+def index(request: HttpRequest) -> HttpResponse:
 
     user_form: UserForm
-    valuse: dict = {}
+    values: dict = {}
 
     if request.method == 'POST':  # POSTされたときの処理
         try:
@@ -24,11 +23,11 @@ def index(request: Request) -> HttpResponse:
         user_form = UserForm()
 
     try:
-        valuse = {
+        values = {
             'form': user_form,
             'users': get_users(),  # userを取得(sqlAlchemyを使用)
         }
     except Exception as e:  # エラー処理
         print(e)
 
-    return render(request, 'index.html', valuse)
+    return render(request, 'index.html', values)
